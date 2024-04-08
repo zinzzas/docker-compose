@@ -1,38 +1,47 @@
 version: '3'
 
 services:
-  mongo-primary:
+  mongo1:
     image: mongo:5.0.0
-    container_name: mongo-primary
+    container_name: mongo1
     expose:
       - 27017
     ports:
       - 27017:27017
+    restart: always
     networks:
-      - mongo_network
+      - mongo_networkc
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+    volumes:
+      - ./volumes/data/mongo1:/data/db
 
-  mongo-secondary1:
+  mongo2:
     image: mongo:5.0.0
-    container_name: mongo-secondary1
+    container_name: mongo2
     expose:
       - 27018
     ports:
       - 27018:27017
+    restart: always
     networks:
       - mongo_network
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs1" ]
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+    volumes:
+      - ./volumes/data/mongo2:/data/db
 
-  mongo-secondary2:
+  mongo3:
     image: mongo:5.0.0
-    container_name: mongo-secondary2
+    container_name: mongo3
     expose:
       - 27019
     ports:
       - 27019:27017
+    restart: always
     networks:
       - mongo_network
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs2" ]
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+    volumes:
+      - ./volumes/data/mongo3:/data/db
 
   mongoku:
     image: huggingface/mongoku:latest
@@ -40,9 +49,9 @@ services:
     ports:
       - 3100:3100
     depends_on:
-      - mongo-primary
-      - mongo-secondary1
-      - mongo-secondary2
+      - mongo1
+      - mongo2
+      - mongo3
     networks:
       - mongo_network
     environment:
