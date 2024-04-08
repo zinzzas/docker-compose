@@ -10,7 +10,7 @@ services:
       - 27017:27017
     restart: always
     networks:
-      - mongo_networkc
+      - mongo_network
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
     volumes:
       - ./volumes/data/mongo1:/data/db
