@@ -10,7 +10,7 @@ services:
       - 27017:27017
     restart: always
     networks:
-      - mongo_network
+      - mongo
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
     volumes:
       - ./volumes/data/mongo1:/data/db
@@ -24,7 +24,7 @@ services:
       - 27018:27017
     restart: always
     networks:
-      - mongo_network
+      - mongo
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
     volumes:
       - ./volumes/data/mongo2:/data/db
@@ -38,7 +38,7 @@ services:
       - 27019:27017
     restart: always
     networks:
-      - mongo_network
+      - mongo
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
     volumes:
       - ./volumes/data/mongo3:/data/db
@@ -53,6 +53,8 @@ services:
       - mongo2
       - mongo3
     networks:
-      - mongo_network
+      - mongo
     environment:
       MONGOKU_DEFAULT_HOST: "mongodb://mongo1:27017"
+networks:
+    mongo:
