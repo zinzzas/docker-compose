@@ -1,8 +1,9 @@
-version: '3'
+version: '3.3'
 
 services:
   mongo1:
     image: mongo:5.0.0
+    hostname: mongo1
     container_name: mongo1
     expose:
       - 27017
@@ -12,11 +13,15 @@ services:
     networks:
       - mongo
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
     volumes:
       - ./volumes/data/mongo1:/data/db
 
   mongo2:
     image: mongo:5.0.0
+    hostname: mongo2
     container_name: mongo2
     expose:
       - 27018
@@ -26,11 +31,15 @@ services:
     networks:
       - mongo
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
     volumes:
       - ./volumes/data/mongo2:/data/db
 
   mongo3:
     image: mongo:5.0.0
+    hostname: mongo3
     container_name: mongo3
     expose:
       - 27019
@@ -40,21 +49,12 @@ services:
     networks:
       - mongo
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
     volumes:
       - ./volumes/data/mongo3:/data/db
 
-  mongoku:
-    image: huggingface/mongoku:latest
-    container_name: mongoku
-    ports:
-      - 3100:3100
-    depends_on:
-      - mongo1
-      - mongo2
-      - mongo3
-    networks:
-      - mongo
-    environment:
-      MONGOKU_DEFAULT_HOST: "mongodb://mongo1:27017"
 networks:
-    mongo:
+  mongo:
+    driver: bridge

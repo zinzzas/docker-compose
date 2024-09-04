@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb:11.2.4
+    container_name: mariadb
+    # networks:
+    #   - batch_network
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=dcanalfw
+      - MYSQL_USER=framewk
+      - MYSQL_PASSWORD=1q2w3e$R
+      - TZ=Asia/Seoul
+    volumes:
+      - ./db/mariadb/data:/var/lib/mariadb

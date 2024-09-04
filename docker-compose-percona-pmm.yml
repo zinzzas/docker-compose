@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  pmm-server:
+    image: percona/pmm-server:latest
+    ports:
+      - "8088:80"
+      - "4433:443"
+      - "6066:8080"
+    container_name: pmm-server
+    volumes:
+      - ./volumes/data/pmm:/srv
+    environment:
+      - METRICS_RESOLUTION=5s
+      - PMM_SERVER_USER=admin
+      - PMM_SERVER_PASSWORD=admin
+    restart: always
+
+  pmm-client:
+    image: percona/pmm-client:latest
+    container_name: pmm-client
+    links:
+      - pmm-server:pmm-server
+    privileged: true
+    volumes:
+      - ./volumes/data/pmm:/srv
+    command: '--server pmm-server:4433 --server-user admin --server-password admin add mongodb --uri="mongodb://localhost:27019" --cluster="rs0"'
+    restart: always

@@ -10,17 +10,15 @@ services:
       - 3306:3306    
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=toor1!
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_HOST=localhost
       - MYSQL_PORT=3306
-      - MYSQL_DATABASE=batchdb
-      - MYSQL_USER=batch-app
-      - MYSQL_PASSWORD=1q2w3e4r5t
+      - MYSQL_DATABASE=dcanalfw
+      - MYSQL_USER=framewk
+      - MYSQL_PASSWORD=1q2w3e$R
       - TZ=Asia/Seoul
     volumes:
-      - ./db/mariadb/conf.d:/etc/mysql/conf.d
       - ./db/mariadb/data:/var/lib/mysql
-      - ./db/mariadb/initdb.d:/docker-entrypoint-initdb.d
 
   mongo1:
     image: mongo:4.4.5
