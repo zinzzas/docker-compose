@@ -1,12 +1,10 @@
 version: '3.3'
 
 services:
-  mongo1:
+  mongodb1:
     image: mongo:5.0.0
-    hostname: mongo1
-    container_name: mongo1
-    expose:
-      - 27017
+    hostname: mongodb1
+    container_name: mongodb1
     ports:
       - 27017:27017
     restart: always
@@ -14,17 +12,16 @@ services:
       - mongo
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_ROOT_USERNAME: cfadmin
+      MONGO_INITDB_ROOT_PASSWORD: 1q2w3e$R
+      MONGO_INITDB_DATABASE: canalframe
     volumes:
       - ./volumes/data/mongo1:/data/db
 
-  mongo2:
+  mongodb2:
     image: mongo:5.0.0
-    hostname: mongo2
-    container_name: mongo2
-    expose:
-      - 27018
+    hostname: mongodb2
+    container_name: mongodb2
     ports:
       - 27018:27017
     restart: always
@@ -32,17 +29,16 @@ services:
       - mongo
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_ROOT_USERNAME: cfadmin
+      MONGO_INITDB_ROOT_PASSWORD: 1q2w3e$R
+      MONGO_INITDB_DATABASE: canalframe
     volumes:
       - ./volumes/data/mongo2:/data/db
 
-  mongo3:
+  mongodb3:
     image: mongo:5.0.0
-    hostname: mongo3
-    container_name: mongo3
-    expose:
-      - 27019
+    hostname: mongodb3
+    container_name: mongodb3
     ports:
       - 27019:27017
     restart: always
@@ -50,8 +46,9 @@ services:
       - mongo
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_ROOT_USERNAME: cfadmin
+      MONGO_INITDB_ROOT_PASSWORD: 1q2w3e$R
+      MONGO_INITDB_DATABASE: canalframe
     volumes:
       - ./volumes/data/mongo3:/data/db
 
